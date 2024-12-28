@@ -1,8 +1,10 @@
+// Task
 /*
-  Створіть тип "Gender", використовуючи union type, 
-  який може містити значення "male", "female". Створіть змінну myGender цього типу.
+ Create a type "Gender" using a union type, which can hold the values ​​"male", "female". Create a variable myGender of this type.
 */
 
-const myGender;
+// Solution
+type Gender = "male" | "female";
+const myGender: Gender = "male";
 
 export {};
