@@ -1,39 +1,36 @@
-/*
-  Ваше завдання полягатиме у створенні двох класів – Employee та Manager.
+/**
+ * Your task will be to create two classes - Employee and Manager.
+ * The Employee class should include:
+ * a name property, which will be available to everyone.
+ * a department property, which will be available only within the Employee class.
+ * a salary property, which will be available only within the Employee class and its subclasses.
+ * The Manager class should be a subclass of the Employee class.
+ * You need to implement a constructor in the Manager class that will call the superclass constructor and increment salary by 10000.
+ */
 
-  Клас Employee повинен включати:
-
-  властивість name, яка буде доступна всім.
-  властивість department, яка буде доступна лише всередині класу Employee.
-  salary, яке буде доступне лише всередині класу Employee та його підкласів.
-
-
-  Клас Manager повинен бути підклас класу Employee
-
-  Необхідно реалізувати в класі Manager конструктор, який викликатиме конструктор суперкласу та збільшуватиме salary на 10000.
-
-*/
-
+// Solution
 class Employee {
-  // Заповніть модифікатори доступу
-  name: string;
-  department: string;
-  salary: number;
+  // Fill in the access modifiers
 
-  constructor(name: string, department: string, salary: number) {
-    this.name = name;
-    this.department = department;
-    this.salary = salary;
-  }
+  constructor(
+    public name: string,
+    protected salary: number,
+    private department: string
+  ) {}
 
-  getEmployeeDetails() {
+  getEmployeeDetails(this: Employee) {
     return `Name: ${this.name}, Department: ${this.department}, Salary: ${this.salary}`;
   }
 }
 
 class Manager extends Employee {
-  // Реалізуйте конструктор та збільшіть salary на 10000
+  // Implement the constructor and increase salary by 10000
+  constructor(name: string, salary: number, department: string) {
+    super(name, salary, department)
+    this.salary = salary + 10000;
+  }
 }
 
+const manager = new Manager("Tom", 200, "Sales");
 
-export {};
+// export {};
