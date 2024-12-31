@@ -1,13 +1,18 @@
-import React, { useEffect, useRef } from 'react';
+import React, { ReactNode, useEffect, useRef } from 'react';
 
-// Опишіть Props
+// Describe Props
+type Props = {
+  children: ReactNode;
+  onContentEndVisible: () => void;
+}
+
 export function Observer({ children, onContentEndVisible }: Props) {
-  // Вкажіть правильний тип для useRef зверніть увагу, в який DOM елемент ми його передаємо
-  const endContentRef = useRef(null);
+  // Specify the correct type for useRef, pay attention to which DOM element we are passing it to
+  const endContentRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    // Вкажіть правильний тип для options, підказка, клас також можна вказувати як тип
-    const options = {
+    // Specify the correct type for options, hint, class can also be specified as a type
+    const options: IntersectionObserverInit = {
       rootMargin: '0px',
       threshold: 1.0,
       root: null,
