@@ -1,20 +1,45 @@
-import React, {useReducer} from "react";
+// Your task is to add types for the following code elements:
 
+// RequestStep: This is a string literal.
+
+// State: This type is an object with two properties isRequestInProgress and RequestStep
+
+// Action: This is a type that represents the possible actions that can be sent to the reducer.
+
+import React, { useReducer } from "react";
+
+enum RequestStep {
+  Start = "start",
+  Pending = "pending",
+  Idle = "idle",
+  Finished = "finished"
+}
+
+type Action =
+  | { type: "START_REQUEST" }
+  | { type: "PENDING_REQUEST" }
+  | { type: "FINISH_REQUEST" }
+  | { type: "RESET_REQUEST" }
+
+type State = {
+  isRequestInProgress: boolean;
+  requestStep: RequestStep;
+}
 const initialState: State = {
   isRequestInProgress: false,
-  requestStep: 'idle',
+  requestStep: RequestStep.Idle,
 };
 
 function requestReducer(state: State, action: Action): State {
   switch (action.type) {
     case 'START_REQUEST':
-      return { ...state, isRequestInProgress: true, requestStep: 'start' };
+      return { ...state, isRequestInProgress: true, requestStep: RequestStep.Start };
     case 'PENDING_REQUEST':
-      return { ...state, isRequestInProgress: true, requestStep: 'pending' };
+      return { ...state, isRequestInProgress: true, requestStep: RequestStep.Pending };
     case 'FINISH_REQUEST':
-      return { ...state, isRequestInProgress: false, requestStep: 'finished' };
+      return { ...state, isRequestInProgress: false, requestStep: RequestStep.Finished };
     case 'RESET_REQUEST':
-      return { ...state, isRequestInProgress: false, requestStep: 'idle' };
+      return { ...state, isRequestInProgress: false, requestStep: RequestStep.Idle };
     default:
       return state;
   }
@@ -25,10 +50,10 @@ export function RequestComponent() {
 
   const startRequest = () => {
     requestDispatch({ type: 'START_REQUEST' });
-    // Імітуємо запит до сервера
+
     setTimeout(() => {
       requestDispatch({ type: 'PENDING_REQUEST' });
-      // Імітуємо отримання відповіді від сервера
+  
       setTimeout(() => {
         requestDispatch({ type: 'FINISH_REQUEST' });
       }, 2000);
@@ -41,9 +66,9 @@ export function RequestComponent() {
 
   return (
     <div>
-      <button onClick={startRequest}>Почати запит</button>
-      <button onClick={resetRequest}>Скинути запит</button>
-      <p>Стан запиту: {requestState.requestStep}</p>
+      <button onClick={startRequest}>Start request</button>
+      <button onClick={resetRequest}>Reset request</button>
+      <p>State of the request: {requestState.requestStep}</p>
     </div>
   );
 }
