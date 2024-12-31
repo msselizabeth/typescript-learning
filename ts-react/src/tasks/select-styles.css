@@ -1,0 +1,10 @@
+.select{
+    display: flex;
+    gap: 5px;
+}
+.select-title{
+    font-weight: 700;
+}
+.selected{
+    color: green;
+}

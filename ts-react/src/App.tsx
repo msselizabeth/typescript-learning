@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import './App.css'
 import { Observer } from './tasks/1';
+import { ComponentApp } from './tasks/4';
 
 
 function App() {
@@ -44,6 +45,8 @@ function App() {
   return (
     <div style={{ padding: "20px" }}>
       <h1>TypeScript with React</h1>
+      <h2>Menu select</h2>
+      <ComponentApp />
 
       <h2>Lazy loading content</h2>
       <ul>

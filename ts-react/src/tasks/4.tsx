@@ -1,28 +1,40 @@
-import React, { createContext, useMemo, useState, useContext } from "react";
-import noop from "lodash/noop";
+import React, { createContext, useMemo, useState, useContext, ReactNode } from "react";
+import "./select-styles.css";
 
 type MenuIds = "first" | "second" | "last";
 type Menu = { id: MenuIds; title: string };
 
-// Додати тип Menu Selected
+type SelectedMenu = {
+  id: MenuIds;
+};
 
-const MenuSelectedContext = createContext<MenuSelected>({
-  selectedMenu: {},
-});
+type MenuSelected = {
+  selectedMenu: SelectedMenu;
+}
 
-// Додайте тип MenuAction
-
-const MenuActionContext = createContext<MenuAction>({
-  onSelectedMenu: noop,
-});
+type MenuAction = {
+  onSelectedMenu: (menu: SelectedMenu) => void;
+};
 
 type PropsProvider = {
-  children; // Додати тип для children
+  children: ReactNode; // Add type
 };
+type PropsMenu = {
+  menus: Menu[];
+};
+
+const MenuSelectedContext = createContext<MenuSelected>({
+  selectedMenu: {id: "first"},
+});
+
+const MenuActionContext = createContext<MenuAction>({
+  onSelectedMenu: () => {},
+});
+
 
 function MenuProvider({ children }: PropsProvider) {
   // Додати тип для SelectedMenu він повинен містити { id }
-  const [selectedMenu, setSelectedMenu] = useState<SelectedMenu>({});
+  const [selectedMenu, setSelectedMenu] = useState<SelectedMenu>({id: "first"});
 
   const menuContextAction = useMemo(
     () => ({
@@ -47,9 +59,6 @@ function MenuProvider({ children }: PropsProvider) {
   );
 }
 
-type PropsMenu = {
-  menus; // Додайте вірний тип для меню
-};
 
 function MenuComponent({ menus }: PropsMenu) {
   const { onSelectedMenu } = useContext(MenuActionContext);
@@ -58,8 +67,8 @@ function MenuComponent({ menus }: PropsMenu) {
   return (
     <>
       {menus.map((menu) => (
-        <div key={menu.id} onClick={() => onSelectedMenu({ id: menu.id })}>
-          {menu.title}{" "}
+        <div key={menu.id} onClick={() => onSelectedMenu({ id: menu.id })} className={`select  ${selectedMenu.id === menu.id ? "selected" : ""}`}>
+          <span className="select-title">{menu.title}</span>
           {selectedMenu.id === menu.id ? "Selected" : "Not selected"}
         </div>
       ))}
@@ -71,15 +80,15 @@ export function ComponentApp() {
   const menus: Menu[] = [
     {
       id: "first",
-      title: "first",
+      title: "1",
     },
     {
       id: "second",
-      title: "second",
+      title: "2",
     },
     {
       id: "last",
-      title: "last",
+      title: "3",
     },
   ];
 
